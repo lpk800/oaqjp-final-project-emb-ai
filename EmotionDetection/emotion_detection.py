@@ -9,6 +9,16 @@ def emotion_detector(text_to_analyze):
 
     # Send POST request to Watson NLP API
     res = requests.post(url, json=input_pyload_2llm, headers=header, timeout=30)
+    
+    if res.status_code == 400:
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
 
     if res.status_code == 200:
         # Parse JSON response
@@ -34,12 +44,4 @@ def emotion_detector(text_to_analyze):
         emotion_scores['dominant_emotion'] = dominant_emotion
         #print(emotion_scores)
         return emotion_scores 
-    else:
-        return {
-            'anger': None,
-            'disgust': None,
-            'fear': None,
-            'joy': None,
-            'sadness': None,
-            'dominant_emotion': None
-        }
+    
